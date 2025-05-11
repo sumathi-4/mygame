@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Smurf Game Background</title>
+  <link rel="stylesheet" href="../css/game.css" />
+</head>
+<body>
+  <div class="glass-container">
+    <!-- Home Button -->
+    <div class="bubbly-home-btn" onclick="goHome()">
+      <img src="../assets/home (1).png" alt="Home Icon" />
+    </div>
+
+    <!-- Pause Button -->
+    <div class="bubbly-pause-btn" onclick="togglePauseBoard()">
+      <img src="../assets/pause.png" alt="Pause">
+    </div>
+
+    <!-- Pause Board -->
+    <div id="pauseBoard" class="pause-board" style="display: none;">
+      <img src="../assets/board.png" alt="Wooden Board" class="board-img" />
+      <div class="board-buttons">
+        <button class="pause-btn" onclick="resumeGame()">
+          <img src="../assets/button.png" alt="Resume"><span>Continue</span>
+        </button>
+        <button class="pause-btn" onclick="restartGame()">
+          <img src="../assets/button.png" alt="Restart"><span>Restart</span>
+        </button>
+        <button class="pause-btn" onclick="quitGame()">
+          <img src="../assets/button.png" alt="Quit"><span>Quit</span>
+        </button>
+      </div>
+    </div>
+    <div id="countdownOverlay" class="countdown-overlay">
+      <div class="countdown-number" id="countdownNum">3</div>
+    </div>
+
+    <div class="stars-container">
+      <!-- Player Stars -->
+      <div class="star-block">
+        <div class="player-stars">
+          <img src="../assets/stars/greystar.png" alt="Star" class="star" id="player-star-1">
+          <img src="../assets/stars/greystar.png" alt="Star" class="star" id="player-star-2">
+          <img src="../assets/stars/greystar.png" alt="Star" class="star" id="player-star-3">
+        </div>
+       
+
+  <!-- Username label (will be updated to "Mathi" via JavaScript) -->
+  <h2 id="playerStar-label">me</h2>
+      </div>
+  
+      <!-- PC Stars -->
+      <div class="star-block">
+        <div class="pc-stars">
+          <img src="../assets/stars/greystar.png" alt="Star" class="star" id="pc-star-1">
+          <img src="../assets/stars/greystar.png" alt="Star" class="star" id="pc-star-2">
+          <img src="../assets/stars/greystar.png" alt="Star" class="star" id="pc-star-3">
+        </div>
+        <h2 id="star-label">Robot</h2>
+      </div>
+    </div>
+
+    <!-- Hand Selection Panel -->
+    <div id="handPanel" class="glass-panel hidden">
+      <h2 class="panel-title">Choose Your Move</h2>
+      <div class="hand-options">
+        <img src="../assets/rock.png" alt="Rock" class="hand bubbly" data-choice="rock">
+        <img src="../assets/paper.png" alt="Paper" class="hand" data-choice="paper">
+        <img src="../assets/scissor.png" alt="Scissors" class="hand" data-choice="scissors">
+      </div>
+    </div>
+    
+    <!-- Hands for animation (hidden initially) -->
+    <div id="battlefield" style="display: none;">
+      <img id="playerHand" class="battle-hand player-hand" src="../assets/right-hand/rock.png" alt="Player Hand" />
+      <div id="roundResult" class="round-result"></div>
+      <img id="pcHand" class="battle-hand pc-hand" src="../assets/left-hand/rock.png" alt="PC Hand" />
+    </div>
+
+    <!-- Battle Labels (showing the player's name from localStorage) -->
+<!-- Battle Labels -->
+<div id="battle-player-labels">
+  <span id="playerNameLabel">
+    <img src="../assets/label.png" alt="Smurf" class="player-icon" />
+    <span id="playerNameText"> You</span>
+  </span>
+  <span>
+    <img src="../assets/robot.png" alt="Robot" class="player-icon" />
+     Robot
+  </span>
+</div>
+
+
+
+    <!-- Result Panel Section inside the wooden board -->
+    <div id="resultPanel" class="result-panel" style="display: none;">
+      <!-- Wooden board for the result -->
+      <div class="wooden-board">
+        <!-- Result will be displayed here -->
+        <h2 id="gameResult"></h2> <!-- This will hold the win/draw/lose message -->
+
+        <!-- Play Again and Quit Game buttons -->
+        <div class="result-buttons">
+          <button class="play-again-btn" onclick="playAgain()">Play Again</button>
+          <button class="quit-game-btn" onclick="quitGame()">Quit Game</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="rainEffect"></div>
+    <div class="player-area">
+      <!-- Existing player content -->
+      <div class="win-effect" id="playerWinEffect"></div>
+    </div>
+    <div id="confetti-wrapper"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../javascript/game.js"></script>
+  <script>
+   
+
+
+  </script>
+</body>
+</html>

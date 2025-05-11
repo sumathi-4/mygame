@@ -1,0 +1,653 @@
+
+/* Background setup */
+body {
+    margin: 0;
+    height: 100vh;
+    background-image: url('../assets/smurf-village.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .glass-container {
+    width: 100%;
+    height: 100vh;
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.08); /* ultra light fog */
+    border-radius: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .bubbly-home-btn {
+    position: absolute; /* This positions the button absolutely within the container */
+    left: 20px; /* This places the button 20px from the left side */
+    top: 30px; /* This places the button 20px from the top */
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(200, 220, 255, 0.4); /* Bubble background */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15),
+                inset 0 4px 8px rgba(255, 255, 255, 0.2);
+  }
+  
+  .bubbly-home-btn img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.7)); /* Glowy icon */
+  }
+  
+  /* 🔁 On hover: Remove bubble + make icon pop */
+  .bubbly-home-btn:hover {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+  }
+  
+  .bubbly-home-btn:hover img {
+    transform: scale(1.4); /* Make icon larger */
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 1)); /* Brighter glow */
+    z-index: 10;
+  
+  }
+  .bubbly-pause-btn {
+    position: absolute; /* This positions the button absolutely within the container */
+    right: 20px; /* This places the button 20px from the left side */
+    top: 30px; /* This places the button 20px from the top */
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(200, 220, 255, 0.4); /* Bubble background */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15),
+                inset 0 4px 8px rgba(255, 255, 255, 0.2);
+  }
+  
+  .bubbly-pause-btn img {
+     width: 35px;
+    height: 35px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.7)); /* Glowy icon */
+  }
+  
+  /* On hover: Remove bubble + make icon pop */
+  .bubbly-pause-btn:hover {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+  }
+  
+  .bubbly-pause-btn:hover img {
+    transform: scale(1.4); /* Make icon larger */
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 1)); /* Brighter glow */
+    z-index: 10;
+  
+  }  
+  .pause-board {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: popIn 0.3s ease;
+  }
+  
+  .board-img {
+    width: 100%;
+    height: auto;
+    max-width: 600px; /* or your actual image width */
+    pointer-events: none;
+  }
+  
+  .board-buttons {
+    position: absolute;
+    top: 58%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .pause-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    width: 220px;
+    height: 65px;
+    transition: transform 0.3s ease;
+  }
+  
+  .pause-btn img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  
+  .pause-btn span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 22px;
+    font-family: 'Comic Sans MS', cursive;
+    text-shadow: 1px 1px 4px #000;
+    pointer-events: none;
+  }
+  
+  .pause-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  @keyframes popIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -60%) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+  
+  .countdown-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Optional dark backdrop */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeOut 1s ease forwards;
+    animation-delay: 4s;
+  }
+  
+  .countdown-number {
+    font-size: 120px;
+    font-weight: bold;
+    font-family: 'Comic Sans MS', cursive;
+    background: url('../assets/bg_no.png') center/cover no-repeat;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    
+    animation: countdownScale 1s ease infinite;
+    text-align: center;
+    
+  }
+  
+  @keyframes countdownScale {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  @keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+  }
+ 
+
+  .glass-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(173, 216, 230, 0.1); /* Soft, light sky blue background */
+    backdrop-filter: blur(12px); /* Soft blur to mimic cloudy effect */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle white border */
+    box-shadow: 
+      inset 0 0 40px rgba(173, 216, 230, 0.5), /* Inner glow with soft cloud color */
+      0 0 20px rgba(173, 216, 230, 0.7), /* Outer glow */
+      0 0 30px rgba(173, 216, 230, 0.6); /* Larger outer glow for a soft halo effect */
+    z-index: 999;
+    text-align: center;
+    transition: all 0.5s ease;
+    animation: glowPulse 6s ease-in-out infinite; /* Pulsing inner and outer glow */
+  }
+  
+  @keyframes glowPulse {
+    0% {
+      box-shadow: 
+        inset 0 0 40px rgba(173, 216, 230, 0.5), /* Inner glow */
+        0 0 20px rgba(173, 216, 230, 0.7), /* Outer glow */
+        0 0 30px rgba(173, 216, 230, 0.6); /* Outer halo glow */
+    }
+    50% {
+      box-shadow: 
+        inset 0 0 60px rgba(173, 216, 230, 0.8), /* Brighter inner glow */
+        0 0 30px rgba(173, 216, 230, 0.9), /* Stronger outer glow */
+        0 0 50px rgba(173, 216, 230, 0.7); /* Stronger outer halo glow */
+    }
+    100% {
+      box-shadow: 
+        inset 0 0 40px rgba(173, 216, 230, 0.5), /* Inner glow */
+        0 0 20px rgba(173, 216, 230, 0.7), /* Outer glow */
+        0 0 30px rgba(173, 216, 230, 0.6); /* Outer halo glow */
+    }
+  }
+  
+  
+  .panel-title {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 26px;
+  }
+  
+  .hand-options {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .hand {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add box-shadow transition */
+  }
+  
+  .hand:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 18px 6px rgba(255, 185, 50, 1); /* Warm golden tone */
+
+
+  }
+  
+  /* Hidden class to toggle visibility */
+  .hidden {
+    display: none;
+  }
+
+  #battlefield {
+    position: relative;
+    width: 100%;
+    height: 600px; /* even bigger battlefield */
+    background: transparent;
+  }
+  
+  .battle-hand {
+    position: absolute;
+    width: 500px; /* bigger hand images */
+    height: 500px;
+    object-fit: contain;
+    display: none;
+  }
+  
+  /* Player hand position */
+  #playerHand {
+    left: -15px; /* move more to left */
+    bottom: 0;
+  }
+  
+  /* PC hand position */
+  #pcHand {
+    right: -15px; /* move more to right */
+    bottom: 0;
+  }
+  
+  .shake {
+    animation: shake 1s ease infinite;
+  }
+  
+  /* Shake Animation */
+  @keyframes shake {
+    0% { transform: rotate(0deg); }
+    20% { transform: rotate(10deg); }
+    40% { transform: rotate(-10deg); }
+    60% { transform: rotate(10deg); }
+    80% { transform: rotate(-10deg); }
+    100% { transform: rotate(0deg); }
+  }
+  .round-result {
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    font-weight: bold;
+    color: #333; /* or white if background needs */
+    text-align: center;
+    
+    animation: pop 0.5s ease f;
+}
+
+
+/* Optional: Winner text pop effect */
+@keyframes pop {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+  
+  .stars-container {
+  display: flex;
+  justify-content: center;
+  gap: 50px; /* space between player and PC */
+  margin-top: 20px;
+}
+
+.star-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.player-stars, .pc-stars {
+  display: flex;
+  gap: 10px;
+}
+
+.star {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.star.bounce {
+  animation: bounce 0.5s;
+}
+
+.star-label {
+  margin-top: 8px;
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+}
+
+@keyframes bounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
+
+
+/* Wooden board style */
+#resultPanel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* full width */
+    height: 100vh; /* full height */
+    background: rgba(0,0,0,0.5); /* optional dark background */
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: center;     /* center vertically */
+    z-index: 1000;
+}
+
+
+@keyframes popupZoom {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.wooden-board {
+  background-image: url('../assets/board.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 600px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: popupZoom 0.6s ease-out;
+}
+
+
+/* Keyframes for zoom in/out animation */
+@keyframes zoomInOut {
+  0% {
+    opacity: 0;
+    transform: scale(0.8); /* Starts smaller */
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1); /* Zooms in */
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1); /* Returns to normal size */
+  }
+}
+
+/* Game result text with zoom in/out animation and additional styling */
+#gameResult h2 {
+  font-family: Tahoma, sans-serif;
+  color: gold; /* Bright golden color for text */
+  margin-top: 130px;
+  font-size: 40px; /* Corrected the font size */
+  text-align: center;
+  font-weight: bold; /* Ensures text is bold */
+  /* Neon golden glowing effect */
+  animation: zoomInOut 1.5s ease-in-out; /* Zoom in/out animation */
+  position: relative;
+  z-index: 10; /* Ensures text stays above other elements */
+  transform: translateY(-10px); /* Moves text slightly up to stand out */
+}
+
+/* Buttons container */
+.result-buttons {
+  display: flex;
+  gap: 30px; /* Little more gap between buttons */
+  margin-top:-40px;
+  
+}
+
+/* Common styles for both buttons */
+.play-again-btn,
+.quit-game-btn {
+  background: url('../assets/button.png') no-repeat center center;
+  background-size: contain;
+  width: 180px; /* Increased size */
+  height: 65px; /* Increased height */
+  border: none;
+  cursor: pointer;
+  color: white; /* Text color white */
+  font-family: 'Poppins', sans-serif; 
+  text-shadow: 2px 2px 5px black; /* Optional: make text more visible */
+  background-color: transparent;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth animation */
+}
+
+/* Hover effect (optional: button pops a little when hovering) */
+.play-again-btn:hover,
+.quit-game-btn:hover {
+  transform: scale(1.09); /* Slightly bigger when hovering */
+}
+
+/* Active effect (when clicking the button) */
+.play-again-btn:active,
+.quit-game-btn:active {
+  transform: scale(0.85); /* Shrinks when clicked */
+   /* Nice little glow effect */
+}
+.win-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  display: none;
+  z-index: 10;
+}
+
+.smoke-cloud {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 30%, rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+  animation: smokeRise 2s ease-out forwards;
+  filter: blur(3px);
+  opacity: 0.9;
+}
+
+@keyframes smokeRise {
+  0% {
+    transform: scale(0.6) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5) translateY(-120px);
+    opacity: 0;
+  }
+}
+#confetti-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #ffcc00;
+  animation: fall 3s ease-out forwards;
+  opacity: 0.8;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+
+#rainEffect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  display: none;
+}
+
+.raindrop {
+  position: absolute;
+  width: 2px;
+  height: 15px;
+  background: rgba(255, 255, 255, 0.5);
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+#battle-player-labels {
+  position: fixed;
+  bottom: 40px;
+  
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 300px;
+  font-size: 1.4rem;
+  color: #fff;
+  z-index: 1000;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  background: none;
+}
+
+
+
+#battle-player-labels span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.player-icon {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+   /* makes it circular */
+}
+
